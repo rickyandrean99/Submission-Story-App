@@ -20,6 +20,15 @@ class LoginActivity : AppCompatActivity() {
 
         setupView()
 
+        binding.customEmail.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+            override fun afterTextChanged(s: Editable?) { }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                setEmailValidation()
+            }
+        })
+
         binding.customPassword.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
             override fun afterTextChanged(s: Editable?) { }
@@ -29,9 +38,17 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
-        binding.customPassword.setOnFocusChangeListener { view, b ->
+        binding.customEmail.setOnFocusChangeListener { _, _ ->
+            setEmailValidation()
+        }
+
+        binding.customPassword.setOnFocusChangeListener { _, _ ->
             setPasswordValidation()
         }
+    }
+
+    private fun setEmailValidation() {
+        binding.tvErrorEmail.visibility = if (binding.customEmail.valid) View.GONE else View.VISIBLE
     }
 
     private fun setPasswordValidation() {
