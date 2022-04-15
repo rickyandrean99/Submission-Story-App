@@ -18,7 +18,6 @@ import com.rickyandrean.a2320j2802_submissionintermediate.R
 
 
 class CustomPasswordEditText : AppCompatEditText, View.OnTouchListener {
-    // private lateinit var activeBackground: Drawable
     private lateinit var inactiveBackground: Drawable
     private lateinit var validBackground: Drawable
     private lateinit var invalidBackground: Drawable
@@ -26,8 +25,8 @@ class CustomPasswordEditText : AppCompatEditText, View.OnTouchListener {
     private lateinit var visibilityOff: Drawable
     private lateinit var visibilityImage: Drawable
     private lateinit var passwordImage: Drawable
-    private var valid: Boolean = false
     private var show: Boolean = false
+    var valid: Boolean = false
 
     constructor(context: Context) : super(context) {
         init()
@@ -47,8 +46,10 @@ class CustomPasswordEditText : AppCompatEditText, View.OnTouchListener {
 
     private fun init() {
         // Image drawable initialization
-        activeBackground =
-            ContextCompat.getDrawable(context, R.drawable.bg_password_active) as Drawable
+        validBackground =
+            ContextCompat.getDrawable(context, R.drawable.bg_password_valid) as Drawable
+        invalidBackground =
+            ContextCompat.getDrawable(context, R.drawable.bg_password_invalid) as Drawable
         inactiveBackground =
             ContextCompat.getDrawable(context, R.drawable.bg_password_inactive) as Drawable
         visibilityOn = ContextCompat.getDrawable(context, R.drawable.ic_visibility_on) as Drawable
@@ -66,16 +67,11 @@ class CustomPasswordEditText : AppCompatEditText, View.OnTouchListener {
         setButtonDrawables()
 
         addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Do nothing
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: Editable?) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 validatePassword(s?.toString())
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                // Do nothing
             }
         })
 
@@ -95,6 +91,8 @@ class CustomPasswordEditText : AppCompatEditText, View.OnTouchListener {
         if (text != null) {
             valid = text.length >= 6
         }
+
+        background = if (valid) validBackground else invalidBackground
     }
 
     private fun changeVisibility() {
@@ -116,15 +114,13 @@ class CustomPasswordEditText : AppCompatEditText, View.OnTouchListener {
         super.onDraw(canvas)
         hint = "Password"
         typeface = ResourcesCompat.getFont(context, R.font.roboto_medium)
-        setTextColor(resources.getColor(R.color.black))
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, 16F)
     }
 
     override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect)
 
         if (focused) {
-            background = activeBackground
+            background = if (valid) validBackground else invalidBackground
             setButtonDrawables(end = visibilityImage)
         } else {
             background = inactiveBackground
