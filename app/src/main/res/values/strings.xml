@@ -2,4 +2,5 @@
     <string name="app_name">A2320J2802_Submission Intermediate</string>
     <string name="password_error_message">Minimum 6 characters password required</string>
     <string name="email_error_message">Email doesn\'t valid</string>
+    <string name="sign_in">Sign In</string>
 </resources>
