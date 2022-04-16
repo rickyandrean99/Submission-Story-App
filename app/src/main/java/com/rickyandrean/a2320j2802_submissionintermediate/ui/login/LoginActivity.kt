@@ -21,7 +21,7 @@ import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user")
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var loginViewModel: LoginViewModel
 
@@ -38,11 +38,11 @@ class LoginActivity : AppCompatActivity() {
         )[LoginViewModel::class.java]
 
         loginViewModel.emailValid.observe(this) {
-            loginValidation()
+            loginValidation(it, loginViewModel.passwordValid.value!!)
         }
 
         loginViewModel.passwordValid.observe(this) {
-            loginValidation()
+            loginValidation(loginViewModel.emailValid.value!!, it)
         }
 
         // Listener
@@ -73,6 +73,8 @@ class LoginActivity : AppCompatActivity() {
                 setPasswordValidation()
             }
         }
+
+        binding.btnLogin.setOnClickListener(this)
     }
 
     private fun setEmailValidation() {
@@ -85,8 +87,9 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.updatePasswordStatus(binding.customPassword.valid)
     }
 
-    private fun loginValidation() {
-        binding.btnLogin.isEnabled = loginViewModel.
+    private fun loginValidation(emailValidation: Boolean, passwordValidation: Boolean) {
+        binding.btnLogin.isEnabled = emailValidation && passwordValidation
+        binding.btnLogin.changeStatus(emailValidation && passwordValidation)
     }
 
     private fun setupView() {
@@ -100,5 +103,9 @@ class LoginActivity : AppCompatActivity() {
             )
         }
         supportActionBar?.hide()
+    }
+
+    override fun onClick(v: View?) {
+
     }
 }
