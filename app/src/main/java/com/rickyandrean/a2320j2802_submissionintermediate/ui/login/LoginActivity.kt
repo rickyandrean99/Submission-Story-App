@@ -15,6 +15,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
+import com.rickyandrean.a2320j2802_submissionintermediate.R
 import com.rickyandrean.a2320j2802_submissionintermediate.databinding.ActivityLoginBinding
 import com.rickyandrean.a2320j2802_submissionintermediate.helper.ViewModelFactory
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
@@ -75,6 +76,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         binding.btnLogin.setOnClickListener(this)
+        binding.tvRegisterHyperlink.setOnClickListener(this)
     }
 
     private fun setEmailValidation() {
@@ -106,6 +108,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-
+        when (v?.id) {
+            R.id.btn_login -> {
+                Toast.makeText(this, "Valid", Toast.LENGTH_LONG).show()
+            }
+            R.id.tv_register_hyperlink -> {
+                Toast.makeText(this, "Redirect Register Page", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 }

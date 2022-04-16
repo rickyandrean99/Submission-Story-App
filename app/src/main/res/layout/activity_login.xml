@@ -5,14 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.login.LoginActivity">
-    
+
+    <ImageView
+        android:id="@+id/iv_login"
+        android:layout_width="0dp"
+        android:layout_height="270dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="40dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/login" />
+
     <com.rickyandrean.a2320j2802_submissionintermediate.custom.CustomEmailEditText
         android:id="@+id/custom_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="40dp"
         android:drawablePadding="12dp"
         android:includeFontPadding="false"
         android:paddingStart="16dp"
@@ -22,16 +35,17 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TouchTargetSizeCheck"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_login_header"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/tv_error_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="40dp"
         android:fontFamily="@font/roboto_medium"
         android:text="@string/email_error_message"
         android:textColor="@color/red"
@@ -44,9 +58,9 @@
         android:id="@+id/custom_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
         android:drawablePadding="12dp"
         android:includeFontPadding="false"
         android:paddingStart="16dp"
@@ -65,7 +79,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="40dp"
         android:fontFamily="@font/roboto_medium"
         android:text="@string/password_error_message"
         android:textColor="@color/red"
@@ -78,9 +92,9 @@
         android:id="@+id/btn_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="40dp"
         android:fontFamily="@font/roboto_bold"
         android:letterSpacing="0"
         android:paddingTop="12dp"
@@ -93,4 +107,49 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_error_password" />
 
+    <TextView
+        android:id="@+id/tv_login_header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="40dp"
+        android:fontFamily="@font/roboto_bold"
+        android:gravity="center_horizontal"
+        android:text="@string/login_header"
+        android:textColor="@color/light_black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_login" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login">
+
+        <TextView
+            android:id="@+id/tv_register_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/register_message"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_register_hyperlink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/register_here"
+            android:textColor="@color/blue"
+            android:textSize="14sp" />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

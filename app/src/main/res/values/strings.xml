@@ -3,4 +3,9 @@
     <string name="password_error_message">Minimum 6 characters password required</string>
     <string name="email_error_message">Email doesn\'t valid</string>
     <string name="sign_in">Sign In</string>
+    <string name="login_header">Login to your account</string>
+    <string name="register_message">Don\'t have an account?</string>
+    <string name="login_message">Already have an account?</string>
+    <string name="register_here">Register here</string>
+    <string name="login_here">Login here</string>
 </resources>
