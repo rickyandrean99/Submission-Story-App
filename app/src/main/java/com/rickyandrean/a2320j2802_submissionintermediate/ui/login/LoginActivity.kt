@@ -14,7 +14,6 @@ import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import com.rickyandrean.a2320j2802_submissionintermediate.R
 import com.rickyandrean.a2320j2802_submissionintermediate.databinding.ActivityLoginBinding
@@ -67,14 +66,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     setPasswordValidation()
                 }
             })
-
-            customEmail.setOnFocusChangeListener { _, _ ->
-                setEmailValidation()
-            }
-
-            customPassword.setOnFocusChangeListener { _, _ ->
-                setPasswordValidation()
-            }
         }
 
         binding.btnLogin.setOnClickListener(this)
@@ -82,12 +73,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setEmailValidation() {
-        binding.tvErrorEmail.visibility = if (binding.customEmail.valid) View.GONE else View.VISIBLE
         loginViewModel.updateEmailStatus(binding.customEmail.valid)
     }
 
     private fun setPasswordValidation() {
-        binding.tvErrorPassword.visibility = if (binding.customPassword.valid) View.GONE else View.VISIBLE
         loginViewModel.updatePasswordStatus(binding.customPassword.valid)
     }
 

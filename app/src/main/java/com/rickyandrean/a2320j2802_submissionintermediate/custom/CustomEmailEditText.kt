@@ -76,6 +76,7 @@ class CustomEmailEditText: AppCompatEditText {
         }
 
         background = if (valid) validBackground else invalidBackground
+        if (!valid) error = "Email doesn't valid"
     }
 
     override fun onDraw(canvas: Canvas?) {
