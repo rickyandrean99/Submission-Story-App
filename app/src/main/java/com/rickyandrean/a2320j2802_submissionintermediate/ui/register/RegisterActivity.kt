@@ -1,7 +1,6 @@
 package com.rickyandrean.a2320j2802_submissionintermediate.ui.register
 
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,7 +18,6 @@ import com.rickyandrean.a2320j2802_submissionintermediate.R
 import com.rickyandrean.a2320j2802_submissionintermediate.databinding.ActivityRegisterBinding
 import com.rickyandrean.a2320j2802_submissionintermediate.helper.ViewModelFactory
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
-import com.rickyandrean.a2320j2802_submissionintermediate.ui.login.LoginActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user")
 
@@ -66,14 +64,6 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                     setPasswordValidation()
                 }
             })
-
-            customEmail.setOnFocusChangeListener { _, _ ->
-                setEmailValidation()
-            }
-
-            customPassword.setOnFocusChangeListener { _, _ ->
-                setPasswordValidation()
-            }
         }
 
         binding.btnRegister.setOnClickListener(this)
@@ -81,12 +71,10 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setEmailValidation() {
-        binding.tvErrorEmail.visibility = if (binding.customEmail.valid) View.GONE else View.VISIBLE
         registerViewModel.updateEmailStatus(binding.customEmail.valid)
     }
 
     private fun setPasswordValidation() {
-        binding.tvErrorPassword.visibility = if (binding.customPassword.valid) View.GONE else View.VISIBLE
         registerViewModel.updatePasswordStatus(binding.customPassword.valid)
     }
 

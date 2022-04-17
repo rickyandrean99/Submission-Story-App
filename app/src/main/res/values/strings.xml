@@ -8,5 +8,6 @@
     <string name="login_here">Login here</string>
     <string name="register_header">Create a new account</string>
     <string name="register">Register</string>
-    <string name="todo">TODO</string>
+    <string name="login_image">Illustration of Login Process</string>
+    <string name="register_image">Illustration of Register Process</string>
 </resources>

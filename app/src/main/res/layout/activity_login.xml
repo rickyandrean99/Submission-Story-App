@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/login"
-        android:contentDescription="@string/todo" />
+        android:contentDescription="@string/login_image" />
 
     <com.rickyandrean.a2320j2802_submissionintermediate.custom.CustomEmailEditText
         android:id="@+id/custom_email"

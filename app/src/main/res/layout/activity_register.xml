@@ -13,6 +13,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="40dp"
+        android:contentDescription="@string/register_image"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +38,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_register_header"
-        tools:ignore="TouchTargetSizeCheck"/>
+        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     <com.rickyandrean.a2320j2802_submissionintermediate.custom.CustomEmailEditText
         android:id="@+id/custom_email"
@@ -58,21 +59,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/custom_name"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <TextView
-        android:id="@+id/tv_error_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="40dp"
-        android:fontFamily="@font/roboto_medium"
-        android:text="sdasd"
-        android:textColor="@color/red"
-        android:textSize="12sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/custom_email" />
+        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     <com.rickyandrean.a2320j2802_submissionintermediate.custom.CustomPasswordEditText
         android:id="@+id/custom_password"
@@ -91,22 +78,8 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_error_email"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <TextView
-        android:id="@+id/tv_error_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="40dp"
-        android:fontFamily="@font/roboto_medium"
-        android:text="dawd"
-        android:textColor="@color/red"
-        android:textSize="12sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/custom_password" />
+        app:layout_constraintTop_toBottomOf="@+id/custom_email"
+        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
     <com.rickyandrean.a2320j2802_submissionintermediate.custom.CustomButtonLogin
         android:id="@+id/btn_register"
@@ -125,7 +98,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_error_password" />
+        app:layout_constraintTop_toBottomOf="@+id/custom_password" />
 
     <TextView
         android:id="@+id/tv_register_header"
