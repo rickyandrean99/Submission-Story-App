@@ -99,7 +99,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_register -> {
-                Toast.makeText(this, "Valid", Toast.LENGTH_LONG).show()
+                registerViewModel.register(binding.customName.text.toString(), binding.customEmail.text.toString(), binding.customPassword.text.toString())
             }
             R.id.tv_login_hyperlink -> {
                 finish()

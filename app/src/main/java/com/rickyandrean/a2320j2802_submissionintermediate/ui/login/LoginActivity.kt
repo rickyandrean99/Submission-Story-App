@@ -10,7 +10,6 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -19,6 +18,7 @@ import com.rickyandrean.a2320j2802_submissionintermediate.R
 import com.rickyandrean.a2320j2802_submissionintermediate.databinding.ActivityLoginBinding
 import com.rickyandrean.a2320j2802_submissionintermediate.helper.ViewModelFactory
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
+import com.rickyandrean.a2320j2802_submissionintermediate.ui.main.MainActivity
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.register.RegisterActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user")
@@ -47,7 +47,22 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             loginValidation(loginViewModel.emailValid.value!!, it)
         }
 
-        // Listener
+        loginViewModel.loginStatus.observe(this) {
+            if (it) {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
+                finish()
+            }
+        }
+
+        loginViewModel.getUser().observe(this) {
+            if (it.token != "" && !loginViewModel.loginStatus.value!!) {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
+        }
+
         with(binding) {
             customEmail.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -101,7 +116,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_login -> {
-                Toast.makeText(this, "Valid", Toast.LENGTH_LONG).show()
+                loginViewModel.login(binding.customEmail.text.toString(), binding.customPassword.text.toString())
             }
             R.id.tv_register_hyperlink -> {
                 startActivity(Intent(this, RegisterActivity::class.java))
