@@ -8,7 +8,6 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
@@ -47,11 +46,11 @@ class CustomPasswordEditText : AppCompatEditText, View.OnTouchListener {
     private fun init() {
         // Image drawable initialization
         validBackground =
-            ContextCompat.getDrawable(context, R.drawable.bg_password_valid) as Drawable
+            ContextCompat.getDrawable(context, R.drawable.bg_valid) as Drawable
         invalidBackground =
-            ContextCompat.getDrawable(context, R.drawable.bg_password_invalid) as Drawable
+            ContextCompat.getDrawable(context, R.drawable.bg_invalid) as Drawable
         inactiveBackground =
-            ContextCompat.getDrawable(context, R.drawable.bg_password_inactive) as Drawable
+            ContextCompat.getDrawable(context, R.drawable.bg_inactive) as Drawable
         visibilityOn = ContextCompat.getDrawable(context, R.drawable.ic_visibility_on) as Drawable
         visibilityOff = ContextCompat.getDrawable(context, R.drawable.ic_visibility_off) as Drawable
         passwordImage = ContextCompat.getDrawable(context, R.drawable.ic_key) as Drawable

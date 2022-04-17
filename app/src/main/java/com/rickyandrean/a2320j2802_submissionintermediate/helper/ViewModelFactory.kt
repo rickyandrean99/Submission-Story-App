@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.login.LoginViewModel
+import com.rickyandrean.a2320j2802_submissionintermediate.ui.register.RegisterViewModel
 
 class ViewModelFactory(private val pref: UserPreference) :
     ViewModelProvider.NewInstanceFactory() {
@@ -11,6 +12,7 @@ class ViewModelFactory(private val pref: UserPreference) :
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(pref) as T
+            modelClass.isAssignableFrom(RegisterViewModel::class.java) -> RegisterViewModel(pref) as T
             else -> throw IllegalArgumentException("Unknown ViewModel: " + modelClass.name)
         }
     }

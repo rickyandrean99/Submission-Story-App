@@ -8,4 +8,6 @@
     <string name="login_message">Already have an account?</string>
     <string name="register_here">Register here</string>
     <string name="login_here">Login here</string>
+    <string name="register_header">Create a new account</string>
+    <string name="register">Register</string>
 </resources>

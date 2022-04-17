@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.text.Editable
-import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
@@ -39,11 +38,11 @@ class CustomEmailEditText: AppCompatEditText {
     private fun init() {
         // Image drawable initialization
         validBackground =
-            ContextCompat.getDrawable(context, R.drawable.bg_password_valid) as Drawable
+            ContextCompat.getDrawable(context, R.drawable.bg_valid) as Drawable
         invalidBackground =
-            ContextCompat.getDrawable(context, R.drawable.bg_password_invalid) as Drawable
+            ContextCompat.getDrawable(context, R.drawable.bg_invalid) as Drawable
         inactiveBackground =
-            ContextCompat.getDrawable(context, R.drawable.bg_password_inactive) as Drawable
+            ContextCompat.getDrawable(context, R.drawable.bg_inactive) as Drawable
         emailImage = ContextCompat.getDrawable(context, R.drawable.ic_email) as Drawable
 
         // Determine background and icon for the first time
@@ -77,10 +76,6 @@ class CustomEmailEditText: AppCompatEditText {
         }
 
         background = if (valid) validBackground else invalidBackground
-    }
-
-    private fun isValidEmail(email: CharSequence): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     override fun onDraw(canvas: Canvas?) {

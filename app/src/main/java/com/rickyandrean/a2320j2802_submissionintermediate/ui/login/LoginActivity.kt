@@ -1,6 +1,7 @@
 package com.rickyandrean.a2320j2802_submissionintermediate.ui.login
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,6 +20,7 @@ import com.rickyandrean.a2320j2802_submissionintermediate.R
 import com.rickyandrean.a2320j2802_submissionintermediate.databinding.ActivityLoginBinding
 import com.rickyandrean.a2320j2802_submissionintermediate.helper.ViewModelFactory
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
+import com.rickyandrean.a2320j2802_submissionintermediate.ui.register.RegisterActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user")
 
@@ -113,7 +115,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 Toast.makeText(this, "Valid", Toast.LENGTH_LONG).show()
             }
             R.id.tv_register_hyperlink -> {
-                Toast.makeText(this, "Redirect Register Page", Toast.LENGTH_LONG).show()
+                startActivity(Intent(this, RegisterActivity::class.java))
             }
         }
     }
