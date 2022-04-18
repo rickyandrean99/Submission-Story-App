@@ -10,4 +10,9 @@
     <string name="register">Register</string>
     <string name="login_image">Illustration of Login Process</string>
     <string name="register_image">Illustration of Register Process</string>
+    <string name="setting">setting</string>
+    <string name="logout">Logout</string>
+    <string name="logout_confirmation">Are you sure want to logout?</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
 </resources>
