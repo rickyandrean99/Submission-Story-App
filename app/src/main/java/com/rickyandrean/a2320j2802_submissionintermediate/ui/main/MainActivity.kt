@@ -13,7 +13,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.rickyandrean.a2320j2802_submissionintermediate.R
+import com.rickyandrean.a2320j2802_submissionintermediate.adapter.StoryAdapter
 import com.rickyandrean.a2320j2802_submissionintermediate.databinding.ActivityMainBinding
 import com.rickyandrean.a2320j2802_submissionintermediate.helper.ViewModelFactory
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
@@ -35,6 +37,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         setupView()
 
+        binding.rvStories.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(this@MainActivity)
+        }
+
         mainViewModel = ViewModelProvider(
             this,
             ViewModelFactory(UserPreference.getInstance(dataStore))
@@ -45,7 +52,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         mainViewModel.stories.observe(this) {
-
+            binding.rvStories.adapter = StoryAdapter(it)
         }
     }
 
