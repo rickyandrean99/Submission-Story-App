@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.A2320J2802_SubmissionIntermediate">
         <activity
+            android:name=".ui.detail.DetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.setting.SettingActivity"
             android:exported="false" />
         <activity
