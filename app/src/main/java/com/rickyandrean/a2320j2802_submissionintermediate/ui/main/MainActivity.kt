@@ -59,6 +59,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.fabAdd.setOnClickListener(this)
     }
 
+    override fun onRestart() {
+        super.onRestart()
+    }
+
     private fun setupView() {
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
