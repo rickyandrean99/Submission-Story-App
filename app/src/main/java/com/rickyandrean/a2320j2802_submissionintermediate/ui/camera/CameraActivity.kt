@@ -57,7 +57,7 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener {
                 }
 
                 override fun onError(exc: ImageCaptureException) {
-                    Toast.makeText(this@CameraActivity, "Gagal mengambil gambar.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@CameraActivity, resources.getString(R.string.take_picture_failed), Toast.LENGTH_SHORT).show()
                 }
             })
     }
@@ -77,7 +77,7 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener {
                 cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
             } catch (exc: Exception) {
-                Toast.makeText(this, "Gagal memunculkan kamera.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, resources.getString(R.string.camera_failed), Toast.LENGTH_SHORT).show()
             }
         }, ContextCompat.getMainExecutor(this))
     }

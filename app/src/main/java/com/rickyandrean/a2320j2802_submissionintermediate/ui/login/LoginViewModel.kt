@@ -15,17 +15,20 @@ class LoginViewModel(private val preference: UserPreference) : ViewModel() {
     private val _emailValid = MutableLiveData<Boolean>()
     private val _passwordValid = MutableLiveData<Boolean>()
     private val _loginStatus = MutableLiveData<Boolean>()
+    private val _loading = MutableLiveData<Boolean>()
 
     val emailValid: LiveData<Boolean> = _emailValid
     val passwordValid: LiveData<Boolean> = _passwordValid
     val loginStatus: LiveData<Boolean> = _loginStatus
     val errorMsg = MutableLiveData<String>()
+    val loading: LiveData<Boolean> = _loading
 
     init {
         _emailValid.value = false
         _passwordValid.value = false
         _loginStatus.value = false
         errorMsg.value = ""
+        _loading.value = false
     }
 
     fun updateEmailStatus(status: Boolean) {
@@ -37,13 +40,16 @@ class LoginViewModel(private val preference: UserPreference) : ViewModel() {
     }
 
     fun login(email: String, password: String) {
-        val client = ApiConfig.getApiService().login(email, password)
+        _loading.value = true
 
+        val client = ApiConfig.getApiService().login(email, password)
         client.enqueue(object : Callback<AuthenticationResponse> {
             override fun onResponse(
                 call: Call<AuthenticationResponse>,
                 response: Response<AuthenticationResponse>
             ) {
+                _loading.value = false
+
                 if (response.isSuccessful) {
                     val result = response.body()
 
@@ -73,6 +79,7 @@ class LoginViewModel(private val preference: UserPreference) : ViewModel() {
 
             override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
                 Log.e(TAG, "Error message: ${t.message}")
+                _loading.value = false
                 errorMsg.value = t.message
             }
         })

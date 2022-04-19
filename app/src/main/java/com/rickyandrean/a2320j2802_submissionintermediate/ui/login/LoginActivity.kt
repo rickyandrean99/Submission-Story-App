@@ -10,7 +10,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -58,11 +58,27 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         loginViewModel.errorMsg.observe(this) {
+            var message = ""
+
             if (it == "Unauthorized") {
-                Toast.makeText(this, resources.getString(R.string.wrong_authentication), Toast.LENGTH_LONG).show()
+                message = resources.getString(R.string.wrong_authentication)
             } else if (it != "") {
-                Toast.makeText(this, resources.getString(R.string.failed_login) + " $it", Toast.LENGTH_LONG).show()
+                message = resources.getString(R.string.failed_login) + " $it"
             }
+
+            if (message != "") {
+                AlertDialog.Builder(this).apply {
+                    setTitle(R.string.login_failed)
+                    setMessage(message)
+                    setPositiveButton(R.string.ok) { _, _ -> }
+                    create()
+                    show()
+                }
+            }
+        }
+
+        loginViewModel.loading.observe(this) {
+            showLoading(it)
         }
 
         loginViewModel.getUser().observe(this) {
@@ -120,6 +136,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             )
         }
         supportActionBar?.hide()
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        with(binding) {
+            if (isLoading) {
+                pbLoading.visibility = View.VISIBLE
+                bgLoading.visibility = View.VISIBLE
+            } else {
+                pbLoading.visibility = View.INVISIBLE
+                bgLoading.visibility = View.INVISIBLE
+            }
+        }
     }
 
     override fun onClick(v: View?) {

@@ -14,13 +14,18 @@ import retrofit2.Response
 class RegisterViewModel(private val preference: UserPreference) : ViewModel() {
     private val _emailValid = MutableLiveData<Boolean>()
     private val _passwordValid = MutableLiveData<Boolean>()
+    private val _loading = MutableLiveData<Boolean>()
 
     val emailValid: LiveData<Boolean> = _emailValid
     val passwordValid: LiveData<Boolean> = _passwordValid
+    val statusMessage = MutableLiveData<String>()
+    val loading: LiveData<Boolean> = _loading
 
     init {
         _emailValid.value = false
         _passwordValid.value = false
+        statusMessage.value = ""
+        _loading.value = false
     }
 
     fun updateEmailStatus(status: Boolean) {
@@ -32,29 +37,37 @@ class RegisterViewModel(private val preference: UserPreference) : ViewModel() {
     }
 
     fun register(name: String, email: String, password: String) {
+        _loading.value = true
+
         val client = ApiConfig.getApiService().register(name, email, password)
         client.enqueue(object : Callback<AuthenticationResponse> {
             override fun onResponse(
                 call: Call<AuthenticationResponse>,
                 response: Response<AuthenticationResponse>
             ) {
+                _loading.value = false
+
                 if (response.isSuccessful) {
                     val result = response.body()
 
                     if (result != null) {
                         if (!result.error) {
-                            Log.d(TAG, "Account Successfully Created")
+                            statusMessage.value = "success"
                         }
                     }
                 } else {
                     // Program will enter this block of code if the email isn't valid by Dicoding backend system.
-                    // For example 'ricky@gmail.c' is true when using kotlin email checking but false by backend
-                    Log.e(TAG, "Invalid email address")
+                    // For example 'ricky@gmail.c' is true when using kotlin email checking but false by backend.
+                    // And the email might be already registered
+                    Log.e(TAG, response.message())
+                    statusMessage.value = response.message()
                 }
             }
 
             override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
                 Log.e(TAG, "Error message: ${t.message}")
+                _loading.value = false
+                statusMessage.value = t.message
             }
         })
     }

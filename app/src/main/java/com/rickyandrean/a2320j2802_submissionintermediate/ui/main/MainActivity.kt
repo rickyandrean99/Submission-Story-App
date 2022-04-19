@@ -48,7 +48,29 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             mainViewModel.getStories(it.token)
         }
 
+        mainViewModel.errorMessage.observe(this) {
+            if (it != "") {
+                AlertDialog.Builder(this).apply {
+                    setTitle(R.string.data_error)
+                    setMessage(R.string.data_error_message.toString() + " $it")
+                    setPositiveButton(R.string.ok) { _, _ -> }
+                    create()
+                    show()
+                }
+            }
+        }
+
         mainViewModel.stories.observe(this) {
+            if (it.size == 0) {
+                AlertDialog.Builder(this).apply {
+                    setTitle(R.string.info)
+                    setMessage(R.string.empty_story)
+                    setPositiveButton(R.string.ok) { _, _ -> }
+                    create()
+                    show()
+                }
+            }
+
             binding.rvStories.adapter = StoryAdapter(it)
         }
 

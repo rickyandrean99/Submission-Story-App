@@ -9,12 +9,12 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
@@ -55,7 +55,7 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (!allPermissionsGranted()) {
-                Toast.makeText(this, "Tidak mendapatkan permission.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, resources.getString(R.string.permission_failed), Toast.LENGTH_SHORT).show()
                 finish()
             }
         }
@@ -116,7 +116,7 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
                     it.type = "image/*"
                 }
 
-                val chooser = Intent.createChooser(intent, "Choose a Picture")
+                val chooser = Intent.createChooser(intent, resources.getString(R.string.choose_image))
                 launcherIntentGallery.launch(chooser)
             }
             R.id.btn_upload -> {
@@ -169,23 +169,35 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
                         val responseBody = response.body()
                         if (responseBody != null) {
                             if (!responseBody.error) {
-                                Toast.makeText(this@AddActivity, responseBody.message, Toast.LENGTH_SHORT).show()
+                                showMessage(true, responseBody.message)
                                 finish()
                             } else {
-                                Toast.makeText(this@AddActivity, "Error message: ${responseBody.message}", Toast.LENGTH_SHORT).show()
+                                showMessage(false, resources.getString(R.string.camera_failed_value) + " ${response.message()}")
                             }
                         }
                     } else {
-                        Toast.makeText(this@AddActivity, "Error message: ${response.message()}", Toast.LENGTH_SHORT).show()
+                        showMessage(false, resources.getString(R.string.camera_failed_value) + " ${response.message()}")
                     }
                 }
 
                 override fun onFailure(call: Call<FileUploadResponse>, t: Throwable) {
-                    Toast.makeText(this@AddActivity, "Failed to upload image", Toast.LENGTH_SHORT).show()
+                    showMessage(false, resources.getString(R.string.camera_failed_value) + " ${t.message}")
                 }
             })
         } else {
-            Toast.makeText(this, "Silakan masukkan berkas gambar ataupun deskripsi terlebih dahulu.", Toast.LENGTH_SHORT).show()
+            showMessage(false, resources.getString(R.string.upload_image_empty))
+        }
+    }
+
+    private fun showMessage(success: Boolean, message: String) {
+        var title = if (success) R.string.camera_success_title else R.string.camera_failed_title
+
+        AlertDialog.Builder(this).apply {
+            setTitle(title)
+            setMessage(message)
+            setPositiveButton(R.string.ok) { _, _ -> }
+            create()
+            show()
         }
     }
 

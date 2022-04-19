@@ -39,4 +39,23 @@
     <!-- Message For User and Logcat -->
     <string name="failed_login">Gagal login dengan error:</string>
     <string name="wrong_authentication">Alamat surel atau kata sandi salah</string>
+    <string name="failed_register">Gagal register dengan error:</string>
+    <string name="invalid_authentication">Alamat surel tidak valid atau alamat surel sudah didaftarkan sebelumnya</string>
+    <string name="register_success_message">Berhasil mendaftarkan akun baru</string>
+    <string name="register_failed">Registrasi gagal</string>
+    <string name="register_success">Registrasi berhasil</string>
+    <string name="login_failed">Masuk gagal</string>
+    <string name="ok">OK</string>
+    <string name="info">Info</string>
+    <string name="empty_story">Tidak ada cerita</string>
+    <string name="data_error">Gagal memuat data</string>
+    <string name="data_error_message">Data cerita gagal diambil dengan error error:</string>
+    <string name="camera_failed">Gagal menampilkan kamera</string>
+    <string name="take_picture_failed">Gagal mengambil gambar</string>
+    <string name="permission_failed">Tidak mendapatkan permission</string>
+    <string name="choose_image">Pilih gambar</string>
+    <string name="upload_image_empty">Silakan masukkan berkas gambar ataupun deskripsi terlebih dahulu</string>
+    <string name="camera_success_title">Unggah Berhasil</string>
+    <string name="camera_failed_title">Kamera gagal</string>
+    <string name="camera_failed_value">Kamera gagal dengan error:</string>
 </resources>

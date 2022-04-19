@@ -9,7 +9,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -43,6 +43,38 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 
         registerViewModel.passwordValid.observe(this) {
             loginValidation(registerViewModel.emailValid.value!!, it)
+        }
+
+        registerViewModel.statusMessage.observe(this) {
+            var message = ""
+            var title = resources.getString(R.string.register_failed)
+
+            when {
+                it == "success" -> {
+                    message = resources.getString(R.string.register_success_message)
+                    title = resources.getString(R.string.register_success)
+                }
+                it == "Bad Request" -> {
+                    message = resources.getString(R.string.invalid_authentication)
+                }
+                it != "" -> {
+                    message = resources.getString(R.string.failed_login) + " $it"
+                }
+            }
+
+            if (message != "") {
+                AlertDialog.Builder(this).apply {
+                    setTitle(title)
+                    setMessage(message)
+                    setPositiveButton(R.string.ok) { _, _ -> }
+                    create()
+                    show()
+                }
+            }
+        }
+
+        registerViewModel.loading.observe(this) {
+            showLoading(it)
         }
 
         // Listener
@@ -94,6 +126,18 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
             )
         }
         supportActionBar?.hide()
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        with(binding) {
+            if (isLoading) {
+                pbLoading.visibility = View.VISIBLE
+                bgLoading.visibility = View.VISIBLE
+            } else {
+                pbLoading.visibility = View.INVISIBLE
+                bgLoading.visibility = View.INVISIBLE
+            }
+        }
     }
 
     override fun onClick(v: View?) {

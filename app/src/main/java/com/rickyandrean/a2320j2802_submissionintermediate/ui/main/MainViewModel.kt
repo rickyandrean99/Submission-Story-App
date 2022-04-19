@@ -7,7 +7,6 @@ import com.rickyandrean.a2320j2802_submissionintermediate.model.StoryResponse
 import com.rickyandrean.a2320j2802_submissionintermediate.model.UserModel
 import com.rickyandrean.a2320j2802_submissionintermediate.network.ApiConfig
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
-import com.rickyandrean.a2320j2802_submissionintermediate.ui.login.LoginViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,6 +16,11 @@ class MainViewModel(private val preference: UserPreference) : ViewModel() {
     private val _stories = MutableLiveData<ArrayList<ListStoryItem>>()
 
     val stories: LiveData<ArrayList<ListStoryItem>> = _stories
+    val errorMessage = MutableLiveData<String>()
+
+    init {
+        errorMessage.value = ""
+    }
 
     fun getStories(token: String) {
         val client = ApiConfig.getApiService().stories("Bearer $token")
@@ -29,16 +33,19 @@ class MainViewModel(private val preference: UserPreference) : ViewModel() {
                         if (result.listStory != null) {
                             // Already do null checking but IDE still show red line in code below
                             // So I decide to add non-null asserted
+                            errorMessage.value = ""
                             _stories.value = result.listStory!!
                         }
                     }
                 } else {
-                    Log.e(TAG, "Error isn't successful")
+                    Log.e(TAG, "Error message: ${response.message()}")
+                    errorMessage.value = response.message()
                 }
             }
 
             override fun onFailure(call: Call<StoryResponse>, t: Throwable) {
                 Log.e(TAG, "Error message: ${t.message}")
+                errorMessage.value = t.message
             }
         })
     }
