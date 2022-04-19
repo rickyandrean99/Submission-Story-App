@@ -12,8 +12,4 @@ class AddViewModel(private val preference: UserPreference) : ViewModel() {
     fun getUser(): LiveData<UserModel> {
         return preference.getUser().asLiveData()
     }
-
-    companion object {
-        private const val TAG = "MainViewModel"
-    }
 }

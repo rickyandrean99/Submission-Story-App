@@ -76,12 +76,12 @@ class CustomEmailEditText: AppCompatEditText {
         }
 
         background = if (valid) validBackground else invalidBackground
-        if (!valid) error = "Email doesn't valid"
+        if (!valid) error = resources.getString(R.string.invalid_email)
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        hint = "Email"
+        hint = resources.getString(R.string.email)
         typeface = ResourcesCompat.getFont(context, R.font.roboto_medium)
     }
 

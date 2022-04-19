@@ -19,11 +19,13 @@ class LoginViewModel(private val preference: UserPreference) : ViewModel() {
     val emailValid: LiveData<Boolean> = _emailValid
     val passwordValid: LiveData<Boolean> = _passwordValid
     val loginStatus: LiveData<Boolean> = _loginStatus
+    val errorMsg = MutableLiveData<String>()
 
     init {
         _emailValid.value = false
         _passwordValid.value = false
         _loginStatus.value = false
+        errorMsg.value = ""
     }
 
     fun updateEmailStatus(status: Boolean) {
@@ -47,6 +49,7 @@ class LoginViewModel(private val preference: UserPreference) : ViewModel() {
 
                     if (result != null) {
                         if (!result.error) {
+                            errorMsg.value = ""
                             _loginStatus.value = true
 
                             viewModelScope.launch {
@@ -62,12 +65,15 @@ class LoginViewModel(private val preference: UserPreference) : ViewModel() {
                         }
                     }
                 } else {
-                    Log.e(TAG, "Authentication Failed")
+                    // Unauthorized
+                    Log.e(TAG, response.message())
+                    errorMsg.value = response.message()
                 }
             }
 
             override fun onFailure(call: Call<AuthenticationResponse>, t: Throwable) {
                 Log.e(TAG, "Error message: ${t.message}")
+                errorMsg.value = t.message
             }
         })
     }

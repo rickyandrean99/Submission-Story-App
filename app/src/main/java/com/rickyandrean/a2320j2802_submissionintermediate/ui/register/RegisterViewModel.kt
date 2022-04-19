@@ -49,7 +49,7 @@ class RegisterViewModel(private val preference: UserPreference) : ViewModel() {
                 } else {
                     // Program will enter this block of code if the email isn't valid by Dicoding backend system.
                     // For example 'ricky@gmail.c' is true when using kotlin email checking but false by backend
-                    Log.e(TAG, "Please input valid email address")
+                    Log.e(TAG, "Invalid email address")
                 }
             }
 

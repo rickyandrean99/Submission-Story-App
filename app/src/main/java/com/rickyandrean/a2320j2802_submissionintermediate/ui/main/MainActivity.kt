@@ -5,9 +5,8 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.provider.Settings
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -21,9 +20,6 @@ import com.rickyandrean.a2320j2802_submissionintermediate.helper.ViewModelFactor
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.add.AddActivity
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.login.LoginActivity
-import com.rickyandrean.a2320j2802_submissionintermediate.ui.login.LoginViewModel
-import com.rickyandrean.a2320j2802_submissionintermediate.ui.setting.SettingActivity
-import kotlinx.coroutines.NonCancellable.cancel
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user")
 
@@ -59,10 +55,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.fabAdd.setOnClickListener(this)
     }
 
-    override fun onRestart() {
-        super.onRestart()
-    }
-
     private fun setupView() {
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -74,7 +66,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             )
         }
 
-        supportActionBar?.title = "Story App"
+        supportActionBar?.title = resources.getString(R.string.app_name)
     }
 
     override fun onClick(v: View?) {
@@ -89,7 +81,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.app_bar_setting -> {
-                startActivity(Intent(this@MainActivity, SettingActivity::class.java))
+                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
             }
             R.id.app_bar_logout -> {
                 AlertDialog.Builder(this).apply {

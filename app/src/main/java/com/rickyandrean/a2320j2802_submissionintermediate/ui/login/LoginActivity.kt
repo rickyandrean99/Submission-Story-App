@@ -10,6 +10,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -53,6 +54,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
                 finish()
+            }
+        }
+
+        loginViewModel.errorMsg.observe(this) {
+            if (it == "Unauthorized") {
+                Toast.makeText(this, resources.getString(R.string.wrong_authentication), Toast.LENGTH_LONG).show()
+            } else if (it != "") {
+                Toast.makeText(this, resources.getString(R.string.failed_login) + " $it", Toast.LENGTH_LONG).show()
             }
         }
 

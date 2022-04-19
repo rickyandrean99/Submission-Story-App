@@ -83,12 +83,12 @@ class CustomPasswordEditText : AppCompatEditText {
         }
 
         background = if (valid) validBackground else invalidBackground
-        if (!valid) error = "Minimum 6 characters password required"
+        if (!valid) error = resources.getString(R.string.invalid_password)
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        hint = "Password"
+        hint = resources.getString(R.string.password)
         typeface = ResourcesCompat.getFont(context, R.font.roboto_medium)
     }
 

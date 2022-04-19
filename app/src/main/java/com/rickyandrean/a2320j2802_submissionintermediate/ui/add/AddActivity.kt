@@ -101,7 +101,7 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-        supportActionBar?.title = "New Story"
+        supportActionBar?.title = resources.getString(R.string.new_story)
     }
 
     override fun onClick(v: View?) {

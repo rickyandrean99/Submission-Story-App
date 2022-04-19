@@ -52,7 +52,7 @@ class CustomNameEditText: AppCompatEditText {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        hint = "Name"
+        hint = resources.getString(R.string.name)
         typeface = ResourcesCompat.getFont(context, R.font.roboto_medium)
     }
 
