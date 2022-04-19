@@ -45,7 +45,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                     message = resources.getString(R.string.invalid_authentication)
                 }
                 it != "" -> {
-                    message = resources.getString(R.string.failed_login) + " $it"
+                    message = resources.getString(R.string.failed_register) + " $it"
                 }
             }
 

@@ -37,7 +37,8 @@
     <string name="upload">Unggah</string>
 
     <!-- Message For User and Logcat -->
-    <string name="failed_login">Gagal login dengan error:</string>
+    <string name="failed_register">Gagal daftar dengan error:</string>
+    <string name="failed_login">Gagal masuk dengan error:</string>
     <string name="wrong_authentication">Alamat surel atau kata sandi salah</string>
     <string name="invalid_authentication">Alamat surel tidak valid atau alamat surel sudah didaftarkan sebelumnya</string>
     <string name="register_success_message">Berhasil mendaftarkan akun baru</string>

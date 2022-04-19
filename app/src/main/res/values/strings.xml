@@ -37,6 +37,7 @@
     <string name="upload">Upload</string>
 
     <!-- Message For User and Logcat -->
+    <string name="failed_register">Register failed with error:</string>
     <string name="failed_login">Login failed with error:</string>
     <string name="wrong_authentication">Wrong email or password</string>
     <string name="invalid_authentication">Invalid email address or address already registered before</string>
