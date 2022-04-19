@@ -74,6 +74,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             binding.rvStories.adapter = StoryAdapter(it)
         }
 
+        mainViewModel.loading.observe(this) {
+            showLoading(it)
+        }
+
         binding.fabAdd.setOnClickListener(this)
     }
 
@@ -89,6 +93,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         supportActionBar?.title = resources.getString(R.string.app_name)
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        with(binding) {
+            if (isLoading) {
+                pbLoading.visibility = View.VISIBLE
+                bgLoading.visibility = View.VISIBLE
+            } else {
+                pbLoading.visibility = View.INVISIBLE
+                bgLoading.visibility = View.INVISIBLE
+            }
+        }
     }
 
     override fun onClick(v: View?) {

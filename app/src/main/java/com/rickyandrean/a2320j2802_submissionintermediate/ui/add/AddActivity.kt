@@ -86,6 +86,10 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
             addViewModel.token = it.token
         }
 
+        addViewModel.loading.observe(this) {
+            showLoading(it)
+        }
+
         binding.btnCamera.setOnClickListener(this)
         binding.btnGallery.setOnClickListener(this)
         binding.btnUpload.setOnClickListener(this)
@@ -153,8 +157,9 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun uploadImage() {
         if (getFile != null && binding.etDescription.text.toString() != "") {
-            val file = reduceFileImage(getFile as File)
+            addViewModel.loading.value = true
 
+            val file = reduceFileImage(getFile as File)
             val description = binding.etDescription.text.toString().toRequestBody("text/plain".toMediaType())
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
             val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData("photo", file.name, requestImageFile)
@@ -165,12 +170,13 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
                     call: Call<FileUploadResponse>,
                     response: Response<FileUploadResponse>
                 ) {
+                    addViewModel.loading.value = false
+
                     if (response.isSuccessful) {
                         val responseBody = response.body()
                         if (responseBody != null) {
                             if (!responseBody.error) {
                                 showMessage(true, responseBody.message)
-                                finish()
                             } else {
                                 showMessage(false, resources.getString(R.string.camera_failed_value) + " ${response.message()}")
                             }
@@ -181,6 +187,7 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
                 }
 
                 override fun onFailure(call: Call<FileUploadResponse>, t: Throwable) {
+                    addViewModel.loading.value = false
                     showMessage(false, resources.getString(R.string.camera_failed_value) + " ${t.message}")
                 }
             })
@@ -195,9 +202,25 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
         AlertDialog.Builder(this).apply {
             setTitle(title)
             setMessage(message)
-            setPositiveButton(R.string.ok) { _, _ -> }
+            setPositiveButton(R.string.ok) { _, _ ->
+                if (success) {
+                    finish()
+                }
+            }
             create()
             show()
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        with(binding) {
+            if (isLoading) {
+                pbLoading.visibility = View.VISIBLE
+                bgLoading.visibility = View.VISIBLE
+            } else {
+                pbLoading.visibility = View.INVISIBLE
+                bgLoading.visibility = View.INVISIBLE
+            }
         }
     }
 
