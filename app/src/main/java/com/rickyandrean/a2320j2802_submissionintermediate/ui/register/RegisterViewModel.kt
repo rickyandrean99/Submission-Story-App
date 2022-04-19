@@ -6,12 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.rickyandrean.a2320j2802_submissionintermediate.model.AuthenticationResponse
 import com.rickyandrean.a2320j2802_submissionintermediate.network.ApiConfig
-import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RegisterViewModel(private val preference: UserPreference) : ViewModel() {
+class RegisterViewModel : ViewModel() {
     private val _emailValid = MutableLiveData<Boolean>()
     private val _passwordValid = MutableLiveData<Boolean>()
     private val _loading = MutableLiveData<Boolean>()

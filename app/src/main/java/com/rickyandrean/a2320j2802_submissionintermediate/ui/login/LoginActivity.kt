@@ -36,8 +36,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         setupView()
 
         loginViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
+            this@LoginActivity,
+            ViewModelFactory.getInstance(UserPreference.getInstance(dataStore))
         )[LoginViewModel::class.java]
 
         loginViewModel.emailValid.observe(this) {
@@ -90,7 +90,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         with(binding) {
             customEmail.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
                 override fun afterTextChanged(s: Editable?) {}
 
                 override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -99,7 +106,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             })
 
             customPassword.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
                 override fun afterTextChanged(s: Editable?) {}
 
                 override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -153,7 +167,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_login -> {
-                loginViewModel.login(binding.customEmail.text.toString(), binding.customPassword.text.toString())
+                loginViewModel.login(
+                    binding.customEmail.text.toString(),
+                    binding.customPassword.text.toString()
+                )
             }
             R.id.tv_register_hyperlink -> {
                 startActivity(Intent(this, RegisterActivity::class.java))

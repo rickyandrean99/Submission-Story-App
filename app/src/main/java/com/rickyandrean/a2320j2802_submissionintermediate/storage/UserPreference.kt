@@ -2,7 +2,6 @@ package com.rickyandrean.a2320j2802_submissionintermediate.storage
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.rickyandrean.a2320j2802_submissionintermediate.model.UserModel

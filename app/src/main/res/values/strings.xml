@@ -39,7 +39,6 @@
     <!-- Message For User and Logcat -->
     <string name="failed_login">Login failed with error:</string>
     <string name="wrong_authentication">Wrong email or password</string>
-    <string name="failed_register">Register failed with error:</string>
     <string name="invalid_authentication">Invalid email address or address already registered before</string>
     <string name="register_success_message">Successfully register new account</string>
     <string name="register_failed">Register failed</string>

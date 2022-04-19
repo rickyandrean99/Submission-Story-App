@@ -57,9 +57,14 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener {
                 }
 
                 override fun onError(exc: ImageCaptureException) {
-                    Toast.makeText(this@CameraActivity, resources.getString(R.string.take_picture_failed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@CameraActivity,
+                        resources.getString(R.string.take_picture_failed),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-            })
+            }
+        )
     }
 
     private fun startCamera() {
@@ -77,7 +82,11 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener {
                 cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
             } catch (exc: Exception) {
-                Toast.makeText(this, resources.getString(R.string.camera_failed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    resources.getString(R.string.camera_failed),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }, ContextCompat.getMainExecutor(this))
     }
@@ -100,7 +109,7 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener {
             R.id.captureImage -> takePhoto()
             R.id.switchCamera -> {
                 cameraSelector =
-                    if (cameraSelector.equals(CameraSelector.DEFAULT_BACK_CAMERA))
+                    if (cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA)
                         CameraSelector.DEFAULT_FRONT_CAMERA
                     else
                         CameraSelector.DEFAULT_BACK_CAMERA

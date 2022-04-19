@@ -8,13 +8,10 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
-import android.view.MotionEvent
-import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.rickyandrean.a2320j2802_submissionintermediate.R
-
 
 class CustomPasswordEditText : AppCompatEditText {
     private lateinit var inactiveBackground: Drawable

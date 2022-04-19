@@ -71,7 +71,6 @@ class LoginViewModel(private val preference: UserPreference) : ViewModel() {
                         }
                     }
                 } else {
-                    // Unauthorized
                     Log.e(TAG, response.message())
                     errorMsg.value = response.message()
                 }

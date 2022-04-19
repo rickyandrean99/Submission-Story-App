@@ -39,7 +39,6 @@
     <!-- Message For User and Logcat -->
     <string name="failed_login">Gagal login dengan error:</string>
     <string name="wrong_authentication">Alamat surel atau kata sandi salah</string>
-    <string name="failed_register">Gagal register dengan error:</string>
     <string name="invalid_authentication">Alamat surel tidak valid atau alamat surel sudah didaftarkan sebelumnya</string>
     <string name="register_success_message">Berhasil mendaftarkan akun baru</string>
     <string name="register_failed">Registrasi gagal</string>

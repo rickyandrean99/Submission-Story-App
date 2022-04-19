@@ -1,6 +1,5 @@
 package com.rickyandrean.a2320j2802_submissionintermediate.network
 
-import android.util.Log
 import com.rickyandrean.a2320j2802_submissionintermediate.model.AuthenticationResponse
 import com.rickyandrean.a2320j2802_submissionintermediate.model.FileUploadResponse
 import com.rickyandrean.a2320j2802_submissionintermediate.model.StoryResponse

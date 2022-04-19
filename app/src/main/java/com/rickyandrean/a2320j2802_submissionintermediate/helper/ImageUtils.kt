@@ -14,9 +14,14 @@ import java.util.*
 
 private const val FILENAME_FORMAT = "dd-MMM-yyyy"
 
-val timeStamp: String = SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis())
+val timeStamp: String =
+    SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis())
 
-fun createCustomTempFile(context: Context): File = File.createTempFile(timeStamp, ".jpg", context.getExternalFilesDir(Environment.DIRECTORY_PICTURES))
+fun createCustomTempFile(context: Context): File = File.createTempFile(
+    timeStamp,
+    ".jpg",
+    context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+)
 
 fun createFile(application: Application): File {
     val mediaDir = application.externalMediaDirs.firstOrNull()?.let {

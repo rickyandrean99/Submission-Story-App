@@ -1,6 +1,5 @@
 package com.rickyandrean.a2320j2802_submissionintermediate.ui.register
 
-import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,21 +8,14 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.ViewModelProvider
 import com.rickyandrean.a2320j2802_submissionintermediate.R
 import com.rickyandrean.a2320j2802_submissionintermediate.databinding.ActivityRegisterBinding
-import com.rickyandrean.a2320j2802_submissionintermediate.helper.ViewModelFactory
-import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
-
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user")
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityRegisterBinding
-    private lateinit var registerViewModel: RegisterViewModel
+    private val registerViewModel: RegisterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,11 +23,6 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         setupView()
-
-        registerViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
-        )[RegisterViewModel::class.java]
 
         registerViewModel.emailValid.observe(this) {
             loginValidation(it, registerViewModel.passwordValid.value!!)
@@ -80,7 +67,14 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         // Listener
         with(binding) {
             customEmail.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
                 override fun afterTextChanged(s: Editable?) {}
 
                 override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -89,7 +83,14 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
             })
 
             customPassword.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
                 override fun afterTextChanged(s: Editable?) {}
 
                 override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -143,7 +144,11 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_register -> {
-                registerViewModel.register(binding.customName.text.toString(), binding.customEmail.text.toString(), binding.customPassword.text.toString())
+                registerViewModel.register(
+                    binding.customName.text.toString(),
+                    binding.customEmail.text.toString(),
+                    binding.customPassword.text.toString()
+                )
             }
             R.id.tv_login_hyperlink -> {
                 finish()

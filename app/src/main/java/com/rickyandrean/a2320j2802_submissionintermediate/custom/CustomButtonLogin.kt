@@ -8,7 +8,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import com.rickyandrean.a2320j2802_submissionintermediate.R
 
-class CustomButtonLogin: AppCompatButton {
+class CustomButtonLogin : AppCompatButton {
     private lateinit var validBackground: Drawable
     private lateinit var invalidBackground: Drawable
 
@@ -30,7 +30,8 @@ class CustomButtonLogin: AppCompatButton {
 
     private fun init() {
         validBackground = ContextCompat.getDrawable(context, R.drawable.bg_valid_login) as Drawable
-        invalidBackground = ContextCompat.getDrawable(context, R.drawable.bg_invalid_login) as Drawable
+        invalidBackground =
+            ContextCompat.getDrawable(context, R.drawable.bg_invalid_login) as Drawable
 
         background = invalidBackground
         isEnabled = false

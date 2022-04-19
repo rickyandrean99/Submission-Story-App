@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         mainViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
+            this@MainActivity,
+            ViewModelFactory.getInstance(UserPreference.getInstance(dataStore))
         )[MainViewModel::class.java]
 
         mainViewModel.getUser().observe(this) {
@@ -91,7 +91,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-
         supportActionBar?.title = resources.getString(R.string.app_name)
     }
 

@@ -55,7 +55,11 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (!allPermissionsGranted()) {
-                Toast.makeText(this, resources.getString(R.string.permission_failed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    resources.getString(R.string.permission_failed),
+                    Toast.LENGTH_SHORT
+                ).show()
                 finish()
             }
         }
@@ -78,8 +82,8 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         addViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
+            this@AddActivity,
+            ViewModelFactory.getInstance(UserPreference.getInstance(dataStore))
         )[AddViewModel::class.java]
 
         addViewModel.getUser().observe(this) {
@@ -120,7 +124,8 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
                     it.type = "image/*"
                 }
 
-                val chooser = Intent.createChooser(intent, resources.getString(R.string.choose_image))
+                val chooser =
+                    Intent.createChooser(intent, resources.getString(R.string.choose_image))
                 launcherIntentGallery.launch(chooser)
             }
             R.id.btn_upload -> {
@@ -134,10 +139,10 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
     ) {
         if (it.resultCode == CAMERA_X_RESULT) {
             val myFile = it.data?.getSerializableExtra("picture") as File
+            val result = BitmapFactory.decodeFile(myFile.path)
 
             getFile = myFile
 
-            val result = BitmapFactory.decodeFile(myFile.path)
             binding.ivNewStory.setImageBitmap(result)
         }
     }
@@ -160,11 +165,14 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
             addViewModel.loading.value = true
 
             val file = reduceFileImage(getFile as File)
-            val description = binding.etDescription.text.toString().toRequestBody("text/plain".toMediaType())
+            val description =
+                binding.etDescription.text.toString().toRequestBody("text/plain".toMediaType())
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData("photo", file.name, requestImageFile)
+            val imageMultipart: MultipartBody.Part =
+                MultipartBody.Part.createFormData("photo", file.name, requestImageFile)
 
-            val service = ApiConfig.getApiService().uploadImage("Bearer ${addViewModel.token}", imageMultipart, description)
+            val service = ApiConfig.getApiService()
+                .uploadImage("Bearer ${addViewModel.token}", imageMultipart, description)
             service.enqueue(object : Callback<FileUploadResponse> {
                 override fun onResponse(
                     call: Call<FileUploadResponse>,
@@ -178,17 +186,26 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
                             if (!responseBody.error) {
                                 showMessage(true, responseBody.message)
                             } else {
-                                showMessage(false, resources.getString(R.string.camera_failed_value) + " ${response.message()}")
+                                showMessage(
+                                    false,
+                                    resources.getString(R.string.camera_failed_value) + " ${response.message()}"
+                                )
                             }
                         }
                     } else {
-                        showMessage(false, resources.getString(R.string.camera_failed_value) + " ${response.message()}")
+                        showMessage(
+                            false,
+                            resources.getString(R.string.camera_failed_value) + " ${response.message()}"
+                        )
                     }
                 }
 
                 override fun onFailure(call: Call<FileUploadResponse>, t: Throwable) {
                     addViewModel.loading.value = false
-                    showMessage(false, resources.getString(R.string.camera_failed_value) + " ${t.message}")
+                    showMessage(
+                        false,
+                        resources.getString(R.string.camera_failed_value) + " ${t.message}"
+                    )
                 }
             })
         } else {
@@ -197,7 +214,7 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun showMessage(success: Boolean, message: String) {
-        var title = if (success) R.string.camera_success_title else R.string.camera_failed_title
+        val title = if (success) R.string.camera_success_title else R.string.camera_failed_title
 
         AlertDialog.Builder(this).apply {
             setTitle(title)

@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.rickyandrean.a2320j2802_submissionintermediate.R
 
-class CustomNameEditText: AppCompatEditText {
+class CustomNameEditText : AppCompatEditText {
     private lateinit var inactiveBackground: Drawable
     private lateinit var activeBackground: Drawable
     private lateinit var nameImage: Drawable

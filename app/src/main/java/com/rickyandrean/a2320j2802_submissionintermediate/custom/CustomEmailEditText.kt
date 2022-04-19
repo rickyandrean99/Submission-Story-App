@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.rickyandrean.a2320j2802_submissionintermediate.R
 
-class CustomEmailEditText: AppCompatEditText {
+class CustomEmailEditText : AppCompatEditText {
     private lateinit var inactiveBackground: Drawable
     private lateinit var validBackground: Drawable
     private lateinit var invalidBackground: Drawable
@@ -51,9 +51,9 @@ class CustomEmailEditText: AppCompatEditText {
         // To show the email icon for the first time
         setButtonDrawables()
 
-        addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-            override fun afterTextChanged(s: Editable?) { }
+        addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: Editable?) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 validateEmail(s)
