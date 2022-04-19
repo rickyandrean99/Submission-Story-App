@@ -19,6 +19,7 @@ import com.rickyandrean.a2320j2802_submissionintermediate.adapter.StoryAdapter
 import com.rickyandrean.a2320j2802_submissionintermediate.databinding.ActivityMainBinding
 import com.rickyandrean.a2320j2802_submissionintermediate.helper.ViewModelFactory
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
+import com.rickyandrean.a2320j2802_submissionintermediate.ui.add.AddActivity
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.login.LoginActivity
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.login.LoginViewModel
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.setting.SettingActivity
@@ -54,6 +55,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         mainViewModel.stories.observe(this) {
             binding.rvStories.adapter = StoryAdapter(it)
         }
+
+        binding.fabAdd.setOnClickListener(this)
     }
 
     private fun setupView() {
@@ -71,9 +74,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when (v?.id) {
-
-        }
+        if (v?.id == R.id.fab_add) startActivity(Intent(this, AddActivity::class.java))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

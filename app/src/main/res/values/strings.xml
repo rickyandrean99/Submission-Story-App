@@ -17,4 +17,8 @@
     <string name="cancel">Cancel</string>
     <string name="name">Name</string>
     <string name="description">Description</string>
+    <string name="new_story">New Story</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="upload">Upload</string>
 </resources>
