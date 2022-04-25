@@ -49,7 +49,7 @@ class MapsViewModel(private val preference: UserPreference): ViewModel() {
                     }
                 } else {
                     Log.e(TAG, "Error message: ${response.message()}")
-                    //errorMessage.value = response.message()
+                    errorMessage.value = response.message()
                 }
             }
 

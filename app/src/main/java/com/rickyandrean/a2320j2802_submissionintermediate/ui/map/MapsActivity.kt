@@ -1,20 +1,14 @@
 package com.rickyandrean.a2320j2802_submissionintermediate.ui.map
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -29,10 +23,9 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.rickyandrean.a2320j2802_submissionintermediate.R
 import com.rickyandrean.a2320j2802_submissionintermediate.databinding.ActivityMapsBinding
 import com.rickyandrean.a2320j2802_submissionintermediate.helper.ViewModelFactory
-import com.rickyandrean.a2320j2802_submissionintermediate.model.ListStoryItem
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.detail.DetailActivity
-import java.lang.Integer.parseInt
+import kotlinx.coroutines.delay
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user")
 
@@ -55,23 +48,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            enableLocation()
-        }
-    }
-
-    private fun enableLocation() {
-        if (ContextCompat.checkSelfPermission(
-                this.applicationContext,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            mMap.isMyLocationEnabled = true
-        } else {
-            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+    private fun showMapInfo() {
+        AlertDialog.Builder(this).apply {
+            setTitle(R.string.info)
+            setMessage(R.string.info_map)
+            setPositiveButton(R.string.ok) { _, _ -> }
+            create()
+            show()
         }
     }
 
@@ -127,7 +110,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        enableLocation()
         with(mMap.uiSettings) {
             isZoomControlsEnabled = true
             isCompassEnabled = true
@@ -151,6 +133,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
                     // Animate camera to the last story location
                     if (index == stories.size - 1) {
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinate, 5f))
+                        showMapInfo()
                     }
                 }
             }

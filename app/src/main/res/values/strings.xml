@@ -23,6 +23,7 @@
     <string name="invalid_password">Minimum 6 characters password required</string>
 
     <!-- Main Page -->
+    <string name="map">Map</string>
     <string name="setting">setting</string>
     <string name="logout">Logout</string>
     <string name="logout_confirmation">Are you sure want to logout?</string>
@@ -59,5 +60,5 @@
     <string name="camera_failed_title">Camera Failed</string>
     <string name="camera_failed_value">Camera failed with error:</string>
     <string name="title_activity_maps">MapsActivity</string>
-    <string name="map">Map</string>
+    <string name="info_map">The darker the color of the marker, the more stories in that location. Click the marker periodically to see another stories</string>
 </resources>
