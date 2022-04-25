@@ -29,9 +29,17 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Call<StoryResponse>
 
-    @GET("stories?location=1")
+    @GET("stories")
+    fun storiesPaging(
+        @Header("Authorization") token: String,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): StoryResponse
+
+    @GET("stories")
     fun storiesMap(
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
+        @Query("location") location: Int = 1
     ): Call<StoryResponse>
 
     @Multipart
