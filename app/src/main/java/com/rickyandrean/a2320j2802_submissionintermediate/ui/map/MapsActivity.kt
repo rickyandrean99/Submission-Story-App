@@ -2,9 +2,11 @@ package com.rickyandrean.a2320j2802_submissionintermediate.ui.map
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -18,6 +20,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.rickyandrean.a2320j2802_submissionintermediate.R
@@ -25,7 +28,6 @@ import com.rickyandrean.a2320j2802_submissionintermediate.databinding.ActivityMa
 import com.rickyandrean.a2320j2802_submissionintermediate.helper.ViewModelFactory
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.detail.DetailActivity
-import kotlinx.coroutines.delay
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user")
 
@@ -55,6 +57,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
             setPositiveButton(R.string.ok) { _, _ -> }
             create()
             show()
+        }
+    }
+
+    private fun setMapStyle() {
+        try {
+            val success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.")
+            }
+        } catch (exception: Resources.NotFoundException) {
+            Log.e(TAG, "Can't find style. Error: ", exception)
         }
     }
 
@@ -109,6 +122,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        setMapStyle()
 
         with(mMap.uiSettings) {
             isZoomControlsEnabled = true
@@ -149,5 +163,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnInfoWi
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra(DetailActivity.STORY, mapsViewModel.stories.value?.get(index))
         startActivity(intent)
+    }
+
+    companion object {
+        private const val TAG = "MapsActivity"
     }
 }
