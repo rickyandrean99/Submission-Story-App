@@ -20,6 +20,7 @@ import com.rickyandrean.a2320j2802_submissionintermediate.helper.ViewModelFactor
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.add.AddActivity
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.login.LoginActivity
+import com.rickyandrean.a2320j2802_submissionintermediate.ui.map.MapsActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user")
 
@@ -119,6 +120,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         when (item.itemId) {
             R.id.app_bar_setting -> {
                 startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+            }
+            R.id.app_bar_map -> {
+                startActivity(Intent(this, MapsActivity::class.java))
             }
             R.id.app_bar_logout -> {
                 AlertDialog.Builder(this).apply {

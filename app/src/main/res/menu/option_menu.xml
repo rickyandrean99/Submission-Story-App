@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/app_bar_map"
+        android:icon="@drawable/ic_map"
+        android:title="@string/map"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/app_bar_setting"
         android:icon="@drawable/ic_translate"
         android:title="@string/setting"

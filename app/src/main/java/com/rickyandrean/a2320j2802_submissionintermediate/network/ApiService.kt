@@ -29,6 +29,11 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Call<StoryResponse>
 
+    @GET("stories?location=1")
+    fun storiesMap(
+        @Header("Authorization") token: String
+    ): Call<StoryResponse>
+
     @Multipart
     @POST("stories")
     fun uploadImage(

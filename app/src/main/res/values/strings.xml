@@ -58,4 +58,6 @@
     <string name="camera_success_title">Success Upload</string>
     <string name="camera_failed_title">Camera Failed</string>
     <string name="camera_failed_value">Camera failed with error:</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="map">Map</string>
 </resources>

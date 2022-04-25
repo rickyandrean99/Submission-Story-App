@@ -6,6 +6,7 @@ import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.add.AddViewModel
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.login.LoginViewModel
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.main.MainViewModel
+import com.rickyandrean.a2320j2802_submissionintermediate.ui.map.MapsViewModel
 
 class ViewModelFactory(private val pref: UserPreference) :
     ViewModelProvider.NewInstanceFactory() {
@@ -15,6 +16,7 @@ class ViewModelFactory(private val pref: UserPreference) :
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(pref) as T
             modelClass.isAssignableFrom(MainViewModel::class.java) -> MainViewModel(pref) as T
             modelClass.isAssignableFrom(AddViewModel::class.java) -> AddViewModel(pref) as T
+            modelClass.isAssignableFrom(MapsViewModel::class.java) -> MapsViewModel(pref) as T
             else -> throw IllegalArgumentException("Unknown ViewModel: " + modelClass.name)
         }
     }
