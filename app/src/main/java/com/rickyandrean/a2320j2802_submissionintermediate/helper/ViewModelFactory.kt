@@ -14,7 +14,6 @@ class ViewModelFactory(private val pref: UserPreference) :
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(pref) as T
-            modelClass.isAssignableFrom(MainViewModel::class.java) -> MainViewModel(pref) as T
             modelClass.isAssignableFrom(AddViewModel::class.java) -> AddViewModel(pref) as T
             modelClass.isAssignableFrom(MapsViewModel::class.java) -> MapsViewModel(pref) as T
             else -> throw IllegalArgumentException("Unknown ViewModel: " + modelClass.name)

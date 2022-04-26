@@ -8,46 +8,62 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import androidx.core.util.Pair
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import com.rickyandrean.a2320j2802_submissionintermediate.databinding.ItemRowStoryBinding
 import com.rickyandrean.a2320j2802_submissionintermediate.model.ListStoryItem
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.detail.DetailActivity
 
-class StoryAdapter(private val stories: ArrayList<ListStoryItem>) :
-    RecyclerView.Adapter<StoryAdapter.StoryViewHolder>() {
-    inner class StoryViewHolder(var binding: ItemRowStoryBinding) :
-        RecyclerView.ViewHolder(binding.root)
+class StoryAdapter: PagingDataAdapter<ListStoryItem, StoryAdapter.StoryViewHolder>(DIFF_CALLBACK) {
+    inner class StoryViewHolder(private val binding: ItemRowStoryBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(data: ListStoryItem) {
+            with(binding) {
+                Glide.with(itemView.context)
+                    .load(data.photoUrl)
+                    .into(ivStory)
+                tvName.text = data.name
+                tvDescription.text = data.description
+            }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryViewHolder {
-        val binding =
-            ItemRowStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return StoryViewHolder(binding)
-    }
+            with(itemView) {
+                setOnClickListener {
+                    val optionsCompat: ActivityOptionsCompat =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            context as Activity,
+                            Pair(binding.ivStory, "photo"),
+                            Pair(binding.tvName, "name"),
+                            Pair(binding.tvDescription, "description"),
+                        )
 
-    override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
-        with(holder.binding) {
-            Glide.with(holder.itemView.context)
-                .load(stories[position].photoUrl)
-                .into(ivStory)
-            tvName.text = stories[position].name
-            tvDescription.text = stories[position].description
-        }
-
-        with(holder.itemView) {
-            setOnClickListener {
-                val optionsCompat: ActivityOptionsCompat =
-                    ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        context as Activity,
-                        Pair(holder.binding.ivStory, "photo"),
-                        Pair(holder.binding.tvName, "name"),
-                        Pair(holder.binding.tvDescription, "description"),
-                    )
-
-                val intent = Intent(context, DetailActivity::class.java)
-                intent.putExtra(DetailActivity.STORY, stories[position])
-                context.startActivity(intent, optionsCompat.toBundle())
+                    val intent = Intent(context, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.STORY, data)
+                    context.startActivity(intent, optionsCompat.toBundle())
+                }
             }
         }
     }
 
-    override fun getItemCount(): Int = stories.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryViewHolder {
+        val binding = ItemRowStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return StoryViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
+        val data = getItem(position)
+        if (data != null) {
+            holder.bind(data)
+        }
+    }
+
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListStoryItem>() {
+            override fun areItemsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+                return oldItem == newItem
+            }
+
+            override fun areContentsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+                return oldItem.id == newItem.id
+            }
+        }
+    }
 }

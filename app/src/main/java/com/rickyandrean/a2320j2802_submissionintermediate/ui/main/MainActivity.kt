@@ -6,17 +6,18 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.*
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.rickyandrean.a2320j2802_submissionintermediate.R
 import com.rickyandrean.a2320j2802_submissionintermediate.adapter.StoryAdapter
 import com.rickyandrean.a2320j2802_submissionintermediate.databinding.ActivityMainBinding
-import com.rickyandrean.a2320j2802_submissionintermediate.helper.ViewModelFactory
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.add.AddActivity
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.login.LoginActivity
@@ -26,7 +27,15 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var mainViewModel: MainViewModel
+    private lateinit var adapter: StoryAdapter
+    private val mainViewModel: MainViewModel by viewModels {
+        ViewModelMainFactory(UserPreference.getInstance(dataStore), this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter.refresh()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,48 +44,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         setupView()
 
-        binding.rvStories.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@MainActivity)
-        }
+        adapter = StoryAdapter()
+        adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        binding.rvStories.adapter = adapter
+        binding.rvStories.layoutManager = LinearLayoutManager(this@MainActivity)
 
-        mainViewModel = ViewModelProvider(
-            this@MainActivity,
-            ViewModelFactory.getInstance(UserPreference.getInstance(dataStore))
-        )[MainViewModel::class.java]
+        mainViewModel.story.observe(this) {
+            adapter.submitData(lifecycle, it)
+        }
 
         mainViewModel.getUser().observe(this) {
-            mainViewModel.getStories(it.token)
-        }
-
-        mainViewModel.errorMessage.observe(this) {
-            if (it != "") {
-                AlertDialog.Builder(this).apply {
-                    setTitle(R.string.data_error)
-                    setMessage(R.string.data_error_message.toString() + " $it")
-                    setPositiveButton(R.string.ok) { _, _ -> }
-                    create()
-                    show()
-                }
-            }
-        }
-
-        mainViewModel.stories.observe(this) {
-            if (it.size == 0) {
-                AlertDialog.Builder(this).apply {
-                    setTitle(R.string.info)
-                    setMessage(R.string.empty_story)
-                    setPositiveButton(R.string.ok) { _, _ -> }
-                    create()
-                    show()
-                }
-            }
-
-            binding.rvStories.adapter = StoryAdapter(it)
-        }
-
-        mainViewModel.loading.observe(this) {
-            showLoading(it)
+            Log.d("Token", it.token)
         }
 
         binding.fabAdd.setOnClickListener(this)
@@ -93,18 +71,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             )
         }
         supportActionBar?.title = resources.getString(R.string.app_name)
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        with(binding) {
-            if (isLoading) {
-                pbLoading.visibility = View.VISIBLE
-                bgLoading.visibility = View.VISIBLE
-            } else {
-                pbLoading.visibility = View.INVISIBLE
-                bgLoading.visibility = View.INVISIBLE
-            }
-        }
     }
 
     override fun onClick(v: View?) {

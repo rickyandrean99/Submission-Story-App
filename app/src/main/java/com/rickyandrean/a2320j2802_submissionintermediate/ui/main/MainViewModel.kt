@@ -1,7 +1,12 @@
 package com.rickyandrean.a2320j2802_submissionintermediate.ui.main
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.rickyandrean.a2320j2802_submissionintermediate.data.StoryRepository
+import com.rickyandrean.a2320j2802_submissionintermediate.di.Injection
 import com.rickyandrean.a2320j2802_submissionintermediate.model.ListStoryItem
 import com.rickyandrean.a2320j2802_submissionintermediate.model.StoryResponse
 import com.rickyandrean.a2320j2802_submissionintermediate.model.UserModel
@@ -12,51 +17,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel(private val preference: UserPreference) : ViewModel() {
-    private val _stories = MutableLiveData<ArrayList<ListStoryItem>>()
-    private val _loading = MutableLiveData<Boolean>()
-
-    val stories: LiveData<ArrayList<ListStoryItem>> = _stories
-    val errorMessage = MutableLiveData<String>()
-    val loading: LiveData<Boolean> = _loading
-
-    init {
-        errorMessage.value = ""
-        _loading.value = false
-    }
-
-    fun getStories(token: String) {
-        _loading.value = true
-
-        val client = ApiConfig.getApiService().stories("Bearer $token")
-        client.enqueue(object : Callback<StoryResponse> {
-            override fun onResponse(call: Call<StoryResponse>, response: Response<StoryResponse>) {
-                _loading.value = false
-
-                if (response.isSuccessful) {
-                    val result = response.body()
-
-                    if (result != null) {
-                        if (result.listStory != null) {
-                            // Already do null checking but IDE still show red line in code below
-                            // So I decide to add non-null asserted
-                            errorMessage.value = ""
-                            _stories.value = result.listStory!!
-                        }
-                    }
-                } else {
-                    Log.e(TAG, "Error message: ${response.message()}")
-                    errorMessage.value = response.message()
-                }
-            }
-
-            override fun onFailure(call: Call<StoryResponse>, t: Throwable) {
-                Log.e(TAG, "Error message: ${t.message}")
-                _loading.value = false
-                errorMessage.value = t.message
-            }
-        })
-    }
+class MainViewModel(private val preference: UserPreference, private val storyRepository: StoryRepository) : ViewModel() {
+    val story: LiveData<PagingData<ListStoryItem>> =
+        storyRepository.getStory().cachedIn(viewModelScope)
 
     fun getUser(): LiveData<UserModel> {
         return preference.getUser().asLiveData()
@@ -67,8 +30,14 @@ class MainViewModel(private val preference: UserPreference) : ViewModel() {
             preference.logout()
         }
     }
+}
 
-    companion object {
-        private const val TAG = "MainViewModel"
+class ViewModelMainFactory(private val pref: UserPreference, private val context: Context) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return MainViewModel(pref, Injection.provideRepository(context)) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
