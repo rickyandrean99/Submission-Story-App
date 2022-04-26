@@ -7,12 +7,13 @@ import androidx.room.RoomDatabase
 import com.rickyandrean.a2320j2802_submissionintermediate.model.ListStoryItem
 
 @Database(
-    entities = [ListStoryItem::class],
+    entities = [ListStoryItem::class, RemoteKeys::class],
     version = 1,
     exportSchema = true
 )
 abstract class StoryDatabase: RoomDatabase()  {
     abstract fun storyDao(): StoryDao
+    abstract fun remoteKeysDao(): RemoteKeysDao
 
     companion object {
         @Volatile

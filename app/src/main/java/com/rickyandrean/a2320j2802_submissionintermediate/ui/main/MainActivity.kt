@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
