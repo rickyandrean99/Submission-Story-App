@@ -6,7 +6,6 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -14,8 +13,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.rickyandrean.a2320j2802_submissionintermediate.R
+import com.rickyandrean.a2320j2802_submissionintermediate.adapter.LoadingStateAdapter
 import com.rickyandrean.a2320j2802_submissionintermediate.adapter.StoryAdapter
 import com.rickyandrean.a2320j2802_submissionintermediate.databinding.ActivityMainBinding
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
@@ -42,22 +41,29 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupView()
-
         adapter = StoryAdapter()
-        adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-        binding.rvStories.adapter = adapter
         binding.rvStories.layoutManager = LinearLayoutManager(this@MainActivity)
+        binding.rvStories.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                adapter.retry()
+            }
+        )
 
-        mainViewModel.story.observe(this) {
-            adapter.submitData(lifecycle, it)
-        }
-
-        mainViewModel.getUser().observe(this) {
-            Log.d("Token", it.token)
-        }
+        setupView()
+        observeData()
 
         binding.fabAdd.setOnClickListener(this)
+    }
+
+    private fun observeData() {
+        // Make sure the token has been obtained before taking the story data
+        mainViewModel.getUser().observe(this) { user ->
+            TOKEN = "Bearer ${user.token}"
+
+            mainViewModel.story.observe(this) { listStory ->
+                adapter.submitData(lifecycle, listStory)
+            }
+        }
     }
 
     private fun setupView() {
@@ -112,5 +118,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         return true
+    }
+
+    companion object {
+        var TOKEN = "token"
     }
 }

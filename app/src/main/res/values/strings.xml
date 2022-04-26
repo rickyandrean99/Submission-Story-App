@@ -29,6 +29,8 @@
     <string name="logout_confirmation">Are you sure want to logout?</string>
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
+    <string name="refresh">Refresh</string>
+    <string name="timeout">Connection Timeout</string>
 
     <!-- Add Page -->
     <string name="new_story">New Story</string>

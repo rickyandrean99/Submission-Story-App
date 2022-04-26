@@ -29,6 +29,8 @@
     <string name="logout_confirmation">Apakah anda yakin ingin keluar?</string>
     <string name="yes">Ya</string>
     <string name="cancel">Batal</string>
+    <string name="refresh">Perbarui</string>
+    <string name="timeout">Waktu koneksi habis</string>
 
     <!-- Add Page -->
     <string name="new_story">Cerita Baru</string>
