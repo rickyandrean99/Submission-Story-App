@@ -38,6 +38,10 @@
     <string name="gallery">Galeri</string>
     <string name="description">Deskripsi</string>
     <string name="upload">Unggah</string>
+    <string name="set_location">Atur Lokasi</string>
+    <string name="set_location_message">Apakah kamu yakin untuk mengatur lokasi disini?</string>
+    <string name="set_location_tutorial">Untuk memilih lokasi klik sembarang pada peta kemudian klik marker</string>
+    <string name="location_set">Lokasi sudah diatur</string>
 
     <!-- Message For User and Logcat -->
     <string name="failed_register">Gagal daftar dengan error:</string>
@@ -63,4 +67,5 @@
     <string name="camera_failed_value">Kamera gagal dengan error:</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="info_map">Semakin pekat warna penanda maka semakin banyak cerita pada lokasi tersebut. Klik penanda secara berkala untuk melihat cerita lainnya</string>
+    <string name="title_activity_location">LocationActivity</string>
 </resources>

@@ -30,6 +30,7 @@ import com.rickyandrean.a2320j2802_submissionintermediate.model.FileUploadRespon
 import com.rickyandrean.a2320j2802_submissionintermediate.network.ApiConfig
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.camera.CameraActivity
+import com.rickyandrean.a2320j2802_submissionintermediate.ui.location.LocationActivity
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -76,7 +77,6 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
 
         setupView()
 
-        // Check permission
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
@@ -96,6 +96,7 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.btnCamera.setOnClickListener(this)
         binding.btnGallery.setOnClickListener(this)
+        binding.btnSetLocation.setOnClickListener(this)
         binding.btnUpload.setOnClickListener(this)
     }
 
@@ -127,6 +128,10 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
                 val chooser =
                     Intent.createChooser(intent, resources.getString(R.string.choose_image))
                 launcherIntentGallery.launch(chooser)
+            }
+            R.id.btn_set_location -> {
+                val locationIntent = Intent(this, LocationActivity::class.java)
+                launcherLocation.launch(locationIntent)
             }
             R.id.btn_upload -> {
                 uploadImage()
@@ -160,19 +165,30 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private val launcherLocation = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == LocationActivity.LOCATION_RESULT && result.data != null) {
+            addViewModel.latitude = result.data?.getStringExtra(LocationActivity.LATITUDE)
+            addViewModel.longitude = result.data?.getStringExtra(LocationActivity.LONGITUDE)
+
+            binding.tvLocationSet.visibility = View.VISIBLE
+        }
+    }
+
     private fun uploadImage() {
         if (getFile != null && binding.etDescription.text.toString() != "") {
             addViewModel.loading.value = true
 
             val file = reduceFileImage(getFile as File)
-            val description =
-                binding.etDescription.text.toString().toRequestBody("text/plain".toMediaType())
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-            val imageMultipart: MultipartBody.Part =
-                MultipartBody.Part.createFormData("photo", file.name, requestImageFile)
+            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData("photo", file.name, requestImageFile)
+            val description = binding.etDescription.text.toString().toRequestBody("text/plain".toMediaType())
+            val latitude = addViewModel.latitude?.toRequestBody("text/plain".toMediaType())
+            val longitude = addViewModel.longitude?.toRequestBody("text/plain".toMediaType())
 
             val service = ApiConfig.getApiService()
-                .uploadImage("Bearer ${addViewModel.token}", imageMultipart, description)
+                .uploadImage("Bearer ${addViewModel.token}", imageMultipart, description, latitude, longitude)
             service.enqueue(object : Callback<FileUploadResponse> {
                 override fun onResponse(
                     call: Call<FileUploadResponse>,

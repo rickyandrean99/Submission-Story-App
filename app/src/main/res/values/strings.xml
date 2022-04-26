@@ -38,6 +38,10 @@
     <string name="gallery">Gallery</string>
     <string name="description">Description</string>
     <string name="upload">Upload</string>
+    <string name="set_location">Set Location</string>
+    <string name="set_location_message">Are you sure to set the location here?</string>
+    <string name="set_location_tutorial">To choose a location, click anywhere on the map and then click the marker</string>
+    <string name="location_set">Location is set!</string>
 
     <!-- Message For User and Logcat -->
     <string name="failed_register">Register failed with error:</string>
@@ -63,4 +67,5 @@
     <string name="camera_failed_value">Camera failed with error:</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="info_map">The darker the color of the marker, the more stories in that location. Click the marker periodically to see another stories</string>
+    <string name="title_activity_location">LocationActivity</string>
 </resources>
