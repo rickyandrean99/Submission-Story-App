@@ -6,18 +6,18 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.*
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rickyandrean.a2320j2802_submissionintermediate.R
 import com.rickyandrean.a2320j2802_submissionintermediate.adapter.LoadingStateAdapter
 import com.rickyandrean.a2320j2802_submissionintermediate.adapter.StoryAdapter
 import com.rickyandrean.a2320j2802_submissionintermediate.databinding.ActivityMainBinding
+import com.rickyandrean.a2320j2802_submissionintermediate.helper.ViewModelFactory
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.add.AddActivity
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.login.LoginActivity
@@ -28,9 +28,7 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: StoryAdapter
-    private val mainViewModel: MainViewModel by viewModels {
-        ViewModelMainFactory(UserPreference.getInstance(dataStore), this)
-    }
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onResume() {
         super.onResume()
@@ -41,6 +39,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        mainViewModel = ViewModelProvider(
+            this@MainActivity,
+            ViewModelFactory.getInstance(UserPreference.getInstance(dataStore))
+        )[MainViewModel::class.java]
 
         adapter = StoryAdapter()
         binding.rvStories.layoutManager = LinearLayoutManager(this@MainActivity)

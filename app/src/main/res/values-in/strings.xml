@@ -1,28 +1,20 @@
 <resources>
     <string name="app_name">Story App</string>
-
-    <!-- Login Page -->
     <string name="login_image">Ilustrasi dari proses masuk</string>
     <string name="login_header">Masuk ke akun anda</string>
     <string name="sign_in">Masuk</string>
     <string name="register_message">Belum punya akun?</string>
     <string name="register_here">Daftar disini</string>
-
-    <!-- Register Page -->
     <string name="register_image">Ilustrasi dari proses daftar</string>
     <string name="register_header">Buat akun baru</string>
     <string name="register">Daftar</string>
     <string name="login_message">Sudah punya akun?</string>
     <string name="login_here">Masuk disini</string>
-
-    <!-- Login and Register -->
     <string name="email">Alamat surel</string>
     <string name="name">Nama</string>
     <string name="password">Kata sandi</string>
     <string name="invalid_email">Alamat surel tidak valid</string>
     <string name="invalid_password">Kata sandi minimal memiliki 6 karakter</string>
-
-    <!-- Main Page -->
     <string name="map">Peta</string>
     <string name="setting">pengaturan</string>
     <string name="logout">Keluar</string>
@@ -31,8 +23,6 @@
     <string name="cancel">Batal</string>
     <string name="refresh">Perbarui</string>
     <string name="timeout">Waktu koneksi habis</string>
-
-    <!-- Add Page -->
     <string name="new_story">Cerita Baru</string>
     <string name="camera">Kamera</string>
     <string name="gallery">Galeri</string>
@@ -42,8 +32,6 @@
     <string name="set_location_message">Apakah kamu yakin untuk mengatur lokasi disini?</string>
     <string name="set_location_tutorial">Untuk memilih lokasi klik sembarang pada peta kemudian klik marker</string>
     <string name="location_set">Lokasi sudah diatur</string>
-
-    <!-- Message For User and Logcat -->
     <string name="failed_register">Gagal daftar dengan error:</string>
     <string name="failed_login">Gagal masuk dengan error:</string>
     <string name="wrong_authentication">Alamat surel atau kata sandi salah</string>

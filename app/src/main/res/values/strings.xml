@@ -1,28 +1,20 @@
 <resources>
     <string name="app_name">Story App</string>
-
-    <!-- Login Page -->
     <string name="login_image">Illustration of login process</string>
     <string name="login_header">Login to your account</string>
     <string name="sign_in">Sign In</string>
     <string name="register_message">Don\'t have an account?</string>
     <string name="register_here">Register here</string>
-
-    <!-- Register Page -->
     <string name="register_image">Illustration of register process</string>
     <string name="register_header">Create a new account</string>
     <string name="register">Register</string>
     <string name="login_message">Already have an account?</string>
     <string name="login_here">Login here</string>
-
-    <!-- Login and Register -->
     <string name="email">Email</string>
     <string name="name">Name</string>
     <string name="password">Password</string>
     <string name="invalid_email">Email doesn\'t valid</string>
     <string name="invalid_password">Minimum 6 characters password required</string>
-
-    <!-- Main Page -->
     <string name="map">Map</string>
     <string name="setting">setting</string>
     <string name="logout">Logout</string>
@@ -31,8 +23,6 @@
     <string name="cancel">Cancel</string>
     <string name="refresh">Refresh</string>
     <string name="timeout">Connection Timeout</string>
-
-    <!-- Add Page -->
     <string name="new_story">New Story</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
@@ -42,8 +32,6 @@
     <string name="set_location_message">Are you sure to set the location here?</string>
     <string name="set_location_tutorial">To choose a location, click anywhere on the map and then click the marker</string>
     <string name="location_set">Location is set!</string>
-
-    <!-- Message For User and Logcat -->
     <string name="failed_register">Register failed with error:</string>
     <string name="failed_login">Login failed with error:</string>
     <string name="wrong_authentication">Wrong email or password</string>

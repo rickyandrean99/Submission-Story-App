@@ -2,6 +2,7 @@ package com.rickyandrean.a2320j2802_submissionintermediate.helper
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.rickyandrean.a2320j2802_submissionintermediate.di.Injection
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.add.AddViewModel
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.login.LoginViewModel
@@ -15,6 +16,7 @@ class ViewModelFactory(private val pref: UserPreference) :
         return when {
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(pref) as T
             modelClass.isAssignableFrom(AddViewModel::class.java) -> AddViewModel(pref) as T
+            modelClass.isAssignableFrom(MainViewModel::class.java) -> MainViewModel(pref, Injection.provideRepository()) as T
             modelClass.isAssignableFrom(MapsViewModel::class.java) -> MapsViewModel(pref) as T
             else -> throw IllegalArgumentException("Unknown ViewModel: " + modelClass.name)
         }
