@@ -208,7 +208,7 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
                         val responseBody = response.body()
                         if (responseBody != null) {
                             if (!responseBody.error) {
-                                showMessage(true, responseBody.message)
+                                showMessage(true, resources.getString(R.string.camera_success_message))
                             } else {
                                 showMessage(
                                     false,
