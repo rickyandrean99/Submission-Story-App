@@ -13,7 +13,6 @@ import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -49,7 +48,8 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
 
     private fun setMapStyle() {
         try {
-            val success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
+            val success =
+                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
             if (!success) {
                 Log.e(TAG, "Style parsing failed.")
             }
@@ -106,6 +106,7 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
         getMyLocation()
 
         mMap.setOnMapClickListener {
+            // Remove previous mark and replace it with the new one
             marker?.remove()
             marker = mMap.addMarker(
                 MarkerOptions()
@@ -129,7 +130,7 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMa
                 setResult(LOCATION_RESULT, result)
                 finish()
             }
-            setNegativeButton(R.string.cancel) {_, _ -> }
+            setNegativeButton(R.string.cancel) { _, _ -> }
             create()
             show()
         }

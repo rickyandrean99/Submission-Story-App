@@ -9,7 +9,10 @@ import com.rickyandrean.a2320j2802_submissionintermediate.model.UserModel
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val preference: UserPreference, private val storyRepository: StoryRepository) : ViewModel() {
+class MainViewModel(
+    private val preference: UserPreference,
+    storyRepository: StoryRepository
+) : ViewModel() {
     val story: LiveData<PagingData<ListStoryItem>> =
         storyRepository.getStory().cachedIn(viewModelScope)
 

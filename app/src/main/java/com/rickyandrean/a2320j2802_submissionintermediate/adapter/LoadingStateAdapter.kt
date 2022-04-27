@@ -15,7 +15,8 @@ class LoadingStateAdapter(private val refresh: () -> Unit) :
         parent: ViewGroup,
         loadState: LoadState
     ): LoadingStateViewHolder {
-        val binding = PagingLoadingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            PagingLoadingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return LoadingStateViewHolder(binding, refresh)
     }
 

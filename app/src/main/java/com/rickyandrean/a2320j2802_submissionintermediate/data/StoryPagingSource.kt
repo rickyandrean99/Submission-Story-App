@@ -6,11 +6,12 @@ import com.rickyandrean.a2320j2802_submissionintermediate.model.ListStoryItem
 import com.rickyandrean.a2320j2802_submissionintermediate.network.ApiService
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.main.MainActivity
 
-class StoryPagingSource(private val apiService: ApiService): PagingSource<Int, ListStoryItem>() {
+class StoryPagingSource(private val apiService: ApiService) : PagingSource<Int, ListStoryItem>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ListStoryItem> {
         return try {
             val position = params.key ?: INITIAL_PAGE_INDEX
-            val responseData = apiService.storiesPaging(MainActivity.TOKEN, position, params.loadSize)
+            val responseData =
+                apiService.storiesPaging(MainActivity.TOKEN, position, params.loadSize)
 
             LoadResult.Page(
                 data = responseData.listStory!!,

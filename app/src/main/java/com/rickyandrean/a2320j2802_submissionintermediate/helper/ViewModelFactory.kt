@@ -16,7 +16,10 @@ class ViewModelFactory(private val pref: UserPreference) :
         return when {
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> LoginViewModel(pref) as T
             modelClass.isAssignableFrom(AddViewModel::class.java) -> AddViewModel(pref) as T
-            modelClass.isAssignableFrom(MainViewModel::class.java) -> MainViewModel(pref, Injection.provideRepository()) as T
+            modelClass.isAssignableFrom(MainViewModel::class.java) -> MainViewModel(
+                pref,
+                Injection.provideRepository()
+            ) as T
             modelClass.isAssignableFrom(MapsViewModel::class.java) -> MapsViewModel(pref) as T
             else -> throw IllegalArgumentException("Unknown ViewModel: " + modelClass.name)
         }

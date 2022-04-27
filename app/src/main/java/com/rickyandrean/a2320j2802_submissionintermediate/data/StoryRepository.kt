@@ -7,7 +7,6 @@ import com.rickyandrean.a2320j2802_submissionintermediate.network.ApiService
 
 class StoryRepository(private val apiService: ApiService) {
     fun getStory(): LiveData<PagingData<ListStoryItem>> {
-        @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(
                 pageSize = 5

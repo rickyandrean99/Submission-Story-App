@@ -10,32 +10,24 @@ import com.rickyandrean.a2320j2802_submissionintermediate.model.StoryResponse
 import com.rickyandrean.a2320j2802_submissionintermediate.model.UserModel
 import com.rickyandrean.a2320j2802_submissionintermediate.network.ApiConfig
 import com.rickyandrean.a2320j2802_submissionintermediate.storage.UserPreference
-import com.rickyandrean.a2320j2802_submissionintermediate.ui.main.MainViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MapsViewModel(private val preference: UserPreference): ViewModel() {
+class MapsViewModel(private val preference: UserPreference) : ViewModel() {
     private val _stories = MutableLiveData<ArrayList<ListStoryItem>>()
-    private val _loading = MutableLiveData<Boolean>()
 
     val stories: LiveData<ArrayList<ListStoryItem>> = _stories
     val errorMessage = MutableLiveData<String>()
-    val loading: LiveData<Boolean> = _loading
 
     init {
         errorMessage.value = ""
-        _loading.value = false
     }
 
     fun getStoriesMap(token: String) {
-        _loading.value = true
-
         val client = ApiConfig.getApiService().storiesMap("Bearer $token")
         client.enqueue(object : Callback<StoryResponse> {
             override fun onResponse(call: Call<StoryResponse>, response: Response<StoryResponse>) {
-                _loading.value = false
-
                 if (response.isSuccessful) {
                     val result = response.body()
 
@@ -55,8 +47,7 @@ class MapsViewModel(private val preference: UserPreference): ViewModel() {
 
             override fun onFailure(call: Call<StoryResponse>, t: Throwable) {
                 Log.e(TAG, "Error message: ${t.message}")
-                _loading.value = false
-                 errorMessage.value = t.message
+                errorMessage.value = t.message
             }
         })
     }

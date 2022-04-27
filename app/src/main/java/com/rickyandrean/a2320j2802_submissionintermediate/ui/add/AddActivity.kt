@@ -182,13 +182,21 @@ class AddActivity : AppCompatActivity(), View.OnClickListener {
 
             val file = reduceFileImage(getFile as File)
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData("photo", file.name, requestImageFile)
-            val description = binding.etDescription.text.toString().toRequestBody("text/plain".toMediaType())
+            val imageMultipart: MultipartBody.Part =
+                MultipartBody.Part.createFormData("photo", file.name, requestImageFile)
+            val description =
+                binding.etDescription.text.toString().toRequestBody("text/plain".toMediaType())
             val latitude = addViewModel.latitude?.toRequestBody("text/plain".toMediaType())
             val longitude = addViewModel.longitude?.toRequestBody("text/plain".toMediaType())
 
             val service = ApiConfig.getApiService()
-                .uploadImage("Bearer ${addViewModel.token}", imageMultipart, description, latitude, longitude)
+                .uploadImage(
+                    "Bearer ${addViewModel.token}",
+                    imageMultipart,
+                    description,
+                    latitude,
+                    longitude
+                )
             service.enqueue(object : Callback<FileUploadResponse> {
                 override fun onResponse(
                     call: Call<FileUploadResponse>,

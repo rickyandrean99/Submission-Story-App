@@ -14,8 +14,9 @@ import com.rickyandrean.a2320j2802_submissionintermediate.databinding.ItemRowSto
 import com.rickyandrean.a2320j2802_submissionintermediate.model.ListStoryItem
 import com.rickyandrean.a2320j2802_submissionintermediate.ui.detail.DetailActivity
 
-class StoryAdapter: PagingDataAdapter<ListStoryItem, StoryAdapter.StoryViewHolder>(DIFF_CALLBACK) {
-    inner class StoryViewHolder(private val binding: ItemRowStoryBinding) : RecyclerView.ViewHolder(binding.root) {
+class StoryAdapter : PagingDataAdapter<ListStoryItem, StoryAdapter.StoryViewHolder>(DIFF_CALLBACK) {
+    inner class StoryViewHolder(private val binding: ItemRowStoryBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(data: ListStoryItem) {
             with(binding) {
                 Glide.with(itemView.context)
@@ -44,7 +45,8 @@ class StoryAdapter: PagingDataAdapter<ListStoryItem, StoryAdapter.StoryViewHolde
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryViewHolder {
-        val binding = ItemRowStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemRowStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return StoryViewHolder(binding)
     }
 
@@ -61,7 +63,10 @@ class StoryAdapter: PagingDataAdapter<ListStoryItem, StoryAdapter.StoryViewHolde
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+            override fun areContentsTheSame(
+                oldItem: ListStoryItem,
+                newItem: ListStoryItem
+            ): Boolean {
                 return oldItem.id == newItem.id
             }
         }
